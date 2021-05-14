@@ -1,0 +1,49 @@
+#!/bin/bash
+#Αθανασιάδης Σωκράτης 2547. Ηλιάδης Αντώνιος 2671
+
+> test
+#ping request of first URL
+ping $(head -1 pingInput.txt | tail -1) -c 4 > pingTest #temporarily save output data to pingTest
+
+
+echo "0 www.amazon.com" >> test 
+grep "time=" pingTest | sed -r 's/([^=]*=){3}//' | cut -d' ' -f1 | awk '{ sum += $1; n++ } END { if (n > 0) print sum / n; }' >> test #edit the pingTest file and save useful data to test
+
+#second URL
+ping $(head -2 pingInput.txt | tail -1) -c 4 > pingTest
+
+
+echo "1 www.github.com" >> test
+grep "time=" pingTest | sed -r 's/([^=]*=){3}//' | cut -d' ' -f1 | awk '{ sum += $1; n++ } END { if (n > 0) print sum / n; }' >> test
+
+#third URL
+ping $(head -3 pingInput.txt | tail -1) -c 4 > pingTest
+
+
+echo "2 www.csd.auth.gr" >> test
+grep "time=" pingTest | sed -r 's/([^=]*=){3}//' | cut -d' ' -f1 | awk '{ sum += $1; n++ } END { if (n > 0) print sum / n; }' >> test
+
+#4th URL
+ping $(head -4 pingInput.txt | tail -1) -c 4 > pingTest
+
+
+echo "3 www.skroutz.gr" >> test
+grep "time=" pingTest | sed -r 's/([^=]*=){3}//' | cut -d' ' -f1 | awk '{ sum += $1; n++ } END { if (n > 0) print sum / n; }' >> test
+
+#5th URL
+ping $(head -5 pingInput.txt | tail -1) -c 4 > pingTest
+
+
+echo "4 www.insomnia.gr" >> test
+grep "time=" pingTest | sed -r 's/([^=]*=){3}//' | cut -d' ' -f1 | awk '{ sum += $1; n++ } END { if (n > 0) print sum / n; }' >> test
+
+
+ >pingTest
+awk '{printf "%s%s",$0,(NR%2?FS:RS)}' test >> pingTest #copy the data we want from test to pingTest file
+
+
+gnuplot plot
+cut -c 3- pingTest > pingOutput
+rm pingTest
+rm test
+

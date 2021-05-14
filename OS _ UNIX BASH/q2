@@ -1,0 +1,10 @@
+#!/bin/bash
+#Ηλιάδης Αντώνιος 2671. Αθανασιάδης Σωκράτης 2547
+
+
+
+
+tr " " '\n' < names2 | tr -d "," | sort | uniq --count --repeated
+
+
+
